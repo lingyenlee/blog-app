@@ -15,11 +15,11 @@ const PostSchema = new Schema({
 
     title: {
         type: String,
-        require: true
+
     },
     username: {
         type: String,
-        require: true
+
     },
     content: {
         type: String
@@ -38,8 +38,8 @@ const PostSchema = new Schema({
     upvotes: {
         type: Number
     },
-    image: {
-        type: String
+    blogImages: {
+        type: Array
     },
     comments: [CommentSchema]
 })

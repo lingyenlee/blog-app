@@ -5,7 +5,6 @@ import postRouter from './routes/posts_routes'
 import mongoose from 'mongoose'
 
 
-
 //initialize express as app
 const app = express();
 
