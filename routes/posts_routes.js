@@ -38,109 +38,126 @@ router.get('/:id', async (req, res) => {
 // @route POST api/posts
 // @desc Create a new post
 // @access Private
-// router.post('/', upload.single('blogImages'), async (req, res) => {
+router.post('/add', upload.single('foodImage'), async (req, res) => {
 
-//     const { title, username, content, category, create_date, modified_date, upvotes, comments } = req.body
-//     try {
-//         const newPost = new Post({
-//             title,
-//             username,
-//             content,
-//             category,
-//             create_date,
-//             modified_date,
-//             upvotes,
-//             comments,
-//             blogImages: req.file.location,
-//         })
-//         const post = await newPost.save()
-
-//         res.json(post)
-//         res.send("New post added")
-//     } catch (error) {
-//         console.log(error.message)
-//         res.status(500).send("Server Error")
-//     }
-
-router.post('/', upload.array('blogImages', 4), async (req, res) => {
-
-    console.log(req.files)
-    const { title, username, content, category, create_date, modified_date, upvotes, comments, blogImages } = req.body
+    // const { title, username, description, ingredients, directions,
+    //     servings, cookTime, prepTime, category, create_date, modified_date,
+    //     upvotes, comments } = req.body
     try {
-        let blogImagesArray = []
-        const promises = req.files.map(file => {
-            blogImagesArray.push(file.location)
-            return blogImagesArray
-        })
 
-        const images = await Promise.all(promises)
-        
-        const newPost = new Post({
-            title,
-            username,
-            content,
-            category,
-            create_date,
-            modified_date,
-            upvotes,
-            comments,
-            blogImages: images
-        })
+        let newPost = new Post(req.body)
+
+        if (req.file) {
+            newPost({ foodImage: req.file.location })
+        }
+
+        //     title,
+        //     username,
+        //     description,
+        //     ingredients,
+        //     method,
+        //     servings,
+        //     cookTime,
+        //     prepTime,
+        //     category,
+        //     create_date,
+        //     modified_date,
+        //     upvotes,
+        //     comments,
+        //     blogImages: req.file.location,
+        // })
         const post = await newPost.save()
 
         res.json(post)
         res.send("New post added")
-
     } catch (error) {
         console.log(error.message)
         res.status(500).send("Server Error")
     }
 
-
-
-    // console.log(req.files)
-    // res.send(req.files)
-    // const { title, username, content, category, create_date, modified_date, upvotes, comments, blogImages } = req.body
-    // try {
-    //     const newPost = new Post({
-    //         title,
-    //         username,
-    //         content,
-    //         category,
-    //         create_date,
-    //         modified_date,
-    //         upvotes,
-    //         comments,
-    //         blogImages: req.file.location,
-    //     })
-    //     const post = await newPost.save()
-
-    //     res.json(post)
-    //     res.send("New post added")
-    // } catch (error) {
-    //     console.log(error.message)
-    //     res.status(500).send("Server Error")
-    // }
-
-    // let newPost = await new Post(req.body);
-    // newPost.save((err, Post) => {
-    //     if (err) {
-    //         res.send(err)
-    //     }
-    //     res.json(Post)
-    // })
 })
+
+// router.post('/', upload.array('foodImages', 4), async (req, res) => {
+
+//     console.log(req.files)
+
+//     const { title, username, description, ingredients, directions,
+//         servings, cookTime, prepTime, category, create_date, modified_date,
+//         upvotes, comments } = req.body
+
+
+//     try {
+//         let images;
+
+//         //if no images 
+//         if (req.files === undefined) {
+//             console.log('Error: No File Selected')
+//             res.json('Error: No File Selected')
+//         } else {
+//             images = req.files.map(file => {
+//                 return file.location
+//             })
+//         }
+
+//         const newPost = new Post({
+//             title,
+//             username,
+//             description,
+//             ingredients,
+//             directions,
+//             servings,
+//             cookTime,
+//             prepTime,
+//             category,
+//             create_date,
+//             modified_date,
+//             upvotes,
+//             comments,
+//             foodImages: images
+//         })
+
+//         const post = await newPost.save()
+//         res.json(post)
+//         //  res.send("New post added")
+
+//     } catch (error) {
+//         console.log(error.message)
+//         res.status(500).send("Server Error")
+//     }
+
 
 
 // @route PUT api/posts/:id
 // @desc Update a post by id
 // @access Private
-router.put('/:id', async (req, res) => {
+router.put('/:id', upload.single('foodImage'), async (req, res) => {
+
+    const { title, username, description, ingredients, method,
+        servingSize, cookTime, prepTime, create_date, modified_date,
+        upvotes, comments } = req.body
+
+    let foodImage;
+    if (req.file) {
+        foodImage = req.file.location
+    }
+
 
     try {
-        let post = await Post.findByIdAndUpdate({ _id: req.params.id }, req.body, { new: true })
+        let post = await Post.findOneAndUpdate(
+            { _id: req.params.id },
+            {
+                '$set':
+                {
+                    title, username, description, ingredients, method,
+                    servingSize, cookTime, prepTime, create_date, modified_date,
+                    upvotes, comments, foodImage
+                }
+            },
+            { new: true })
+
         if (!post) return res.status(404).json({ msg: "No post found!" })
         res.json(post)
+        
     } catch (error) {
         console.log(error.message)
         res.status(500).send("Server Error")

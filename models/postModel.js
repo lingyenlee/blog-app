@@ -21,11 +21,23 @@ const PostSchema = new Schema({
         type: String,
 
     },
-    content: {
+    description: {
         type: String
     },
-    category: {
-        type: String
+    ingredients: {
+        type: Array
+    },
+    method: {
+        type: Array
+    },
+    prepTime: {
+        type: Number
+    },
+    cookTime: {
+        type: Number
+    },
+    servingSize: {
+        type: String,
     },
     create_date: {
         type: Date,
@@ -38,8 +50,8 @@ const PostSchema = new Schema({
     upvotes: {
         type: Number
     },
-    blogImages: {
-        type: Array
+    foodImage: {
+        type: String
     },
     comments: [CommentSchema]
 })

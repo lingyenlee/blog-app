@@ -1,0 +1,15 @@
+/* Landing Image */
+
+#landing-img {
+  background-image: url("./images/landingImage.jpg");
+  height: 70vh;
+  width: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+
+
+
+/* recipe page */
+

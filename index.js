@@ -13,7 +13,7 @@ const PORT = 5000;
 
 //mongo connection
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/voyage-blogDB', {
+mongoose.connect('mongodb://localhost/recipe-blog', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false
@@ -29,21 +29,22 @@ mongoose.connect('mongodb://localhost/voyage-blogDB', {
 
 
 //use imported modules
+// cors setup
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
+// app.use(express.static(__dirname + '/public'))
 
 app.get('/', (req, res) => {
-    res.send(`Our Voyage app is running on PORT ${PORT}`)
+    res.send(`Our recipe app is running on PORT ${PORT}`)
 })
 
 //use posts routes
-app.use('/api/posts', postRouter);
+app.use('/posts', postRouter);
 
 //connect and listen to port
 app.listen(PORT, () => {
-    console.log(`Your Voyage app server is running on port ${PORT}`)
+    console.log(`Your recipe app server is running on port ${PORT}`)
 })
 
 

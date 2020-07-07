@@ -2,8 +2,7 @@ import multer from 'multer'
 import multerS3 from 'multer-s3'
 import aws from 'aws-sdk'
 import config from 'config'
-import path from 'path'
-import fs from 'fs'
+
 
 const awsAccessKey = config.get("aws-access-key")
 const awsSecret = config.get("aws-secret")

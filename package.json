@@ -1,11 +1,13 @@
 {
-  "name": "myvoyage",
+  "name": "simplefood",
   "version": "1.0.0",
-  "description": "A blog to enter travelling experiences",
+  "description": "A blog to enter food recipes",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon ./index.js --exec babel-node -e js",
-    "test": "mocha"
+    "client": "cd client && npm run start",
+    "server": "nodemon ./index.js --exec babel-node -e js",
+    "test": "mocha",
+    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
   },
   "keywords": [],
   "author": "LY LEE",
@@ -14,6 +16,7 @@
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-stage-0": "^6.24.1",
+    "concurrently": "^5.2.0",
     "expect": "^26.1.0",
     "mocha": "^8.0.1"
   },
