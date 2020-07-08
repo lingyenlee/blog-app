@@ -1,43 +1,68 @@
 import React, { useState } from 'react'
 import { Row, Col } from 'react-materialize'
 import InputList from './InputList'
+import axios from 'axios'
 
 
 const AddRecipeForm = () => {
 
-    const [formData, setFormData] = useState({
+    const [file, setFile] = useState('')
+    const [inputData, setInputData] = useState({
         title: '',
         description: '',
-        ingredients: [],
-        method: [],
         prepTime: 0,
         cookTime: 0,
         servingSize: '',
-        foodImage: null
     })
+
+    const { title, description, prepTime, cookTime, servingSize } = inputData;
 
     // handle input change
     const handleIngredientInput = (list) => {
-        setFormData({ ...formData, ingredients: list })
+        setInputData({ ...inputData, ingredients: list })
     };
 
     const handleMethodInput = (list) => {
-        setFormData({ ...formData, method: list })
-        // console.log("formData", formData)
-        // console.log("inadd", list)
+        setInputData({ ...inputData, method: list })
     }
-
-
-    const { title, description, prepTime, cookTime, servingSize, foodImage } = formData;
 
 
     const handleChange = e => {
-        setFormData({ ...formData, [e.target.name]: e.target.value })
+        setInputData({ ...inputData, [e.target.name]: e.target.value })
     }
 
-    const handleSubmit = e => {
+    const handleFileChange = e => {
+        // console.log(e.target.name)
+        setFile(e.target.files[0])
+    }
+
+    const handleSubmit = async e => {
         e.preventDefault()
-        // console.log(formData)
+
+        const formData = new FormData()
+        formData.append('foodImage', file)
+        // var data1 = DATA.indexList;
+        // data1.map(group =>{
+        //     formData.append(group.Label,);//How to get the input value here as a second parameter, so than i can pass the label name and corresponding value to form data.
+        // });
+        // for (let k in inputData) {
+        //     formData.append(k, inputData[k])
+        //     console.log(k, inputData[k])
+        // }
+
+        try {
+            const res = await axios.post('http://localhost:5000/posts/add', formData,
+                {
+                    headers: {
+                        // 'Content-Type': 'application/json'
+                        'Content-Type': 'multipart/form-data'
+                    },
+                })
+            console.log(res.data)
+        } catch (error) {
+            console.log(error)
+        }
+
     }
 
     return (
@@ -52,7 +77,7 @@ const AddRecipeForm = () => {
                         </label>
                         <input
                             type="text"
-                            name='title'
+                            name="title"
                             value={title}
                             onChange={handleChange}
                         />
@@ -76,7 +101,7 @@ const AddRecipeForm = () => {
                             <h5>Method</h5>
                             <InputList
                                 onInputChange={handleMethodInput}
-                                name="method"
+                                name="step"
                             />
                         </label>
 
@@ -115,9 +140,11 @@ const AddRecipeForm = () => {
                         </label>
                         <div className="file-field input-field">
                             <div className="btn">
-                                <span>Image</span>
+                                <span>Choose</span>
                                 <input
                                     type="file"
+                                    name="foodImage"
+                                    onChange={handleFileChange}
                                 />
                             </div>
                             <div className="file-path-wrapper">

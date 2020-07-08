@@ -2,6 +2,7 @@ import multer from 'multer'
 import multerS3 from 'multer-s3'
 import aws from 'aws-sdk'
 import config from 'config'
+import path from 'path'
 
 
 const awsAccessKey = config.get("aws-access-key")
@@ -21,7 +22,7 @@ const s3 = new aws.S3({
 //         cb(null, "./uploads");
 //     },
 //     filename: function (req, file, cb) {
-//         cb(null, new Date().toISOString() + file.originalname);
+//         cb(null, new Date().toISOString() + path.extname(file.originalname));
 //     }
 // })
 
@@ -45,11 +46,12 @@ const upload = multer({
         s3: s3,
         bucket: bucketName,
         acl: "public-read",
-        // metadata: (req, file, cb) => {
-        //     cb(null, {fieldName: "blogImages"})
-        // },
+        metadata: (req, file, cb) => {
+            cb(null, { fieldName: file.fieldname })
+        },
         key: function (req, file, cb) {
-            cb(null, Date.now().toString() + '-' + file.originalname);
+            console.log(file)
+            cb(null, Date.now().toString() + '-' + path.extname(file.originalname));
         }
     }),
     limits: { fileSize: 10000000 }, // In bytes: 2000000 bytes = 5 MB

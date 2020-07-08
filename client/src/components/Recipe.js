@@ -32,7 +32,7 @@ const Recipe = (props) => {
                     <Collection>
                         {ingredients.map((item, i) => (
                             <CollectionItem key={i}>
-                                {item}
+                                {item.ingredient}
                             </CollectionItem>)
                         )}
                     </Collection>
@@ -42,7 +42,7 @@ const Recipe = (props) => {
                     <Collection>
                         {method.map((item, i) => (
                             <CollectionItem key={i}>
-                                {i + 1}. {item}
+                               Step {i + 1}. {item.method}
                             </CollectionItem>)
                         )}
                     </Collection>

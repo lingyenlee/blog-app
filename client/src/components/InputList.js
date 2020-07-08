@@ -22,7 +22,7 @@ const InputList = ({ onInputChange, name }) => {
         list[index][name] = value;
         setInputList(list)
         onInputChange(inputList)
-        console.log("inputList component", inputList)
+        // console.log("inputList component", inputList)
 
     }
 
@@ -35,7 +35,7 @@ const InputList = ({ onInputChange, name }) => {
                             type="text"
                             name={name}
                             placeholder={`Enter ${name}`}
-                            value={x.inputText}
+                            value={x.name}
                             onChange={(e) => handleChange(e, i)}
                         />
 

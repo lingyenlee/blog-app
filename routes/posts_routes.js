@@ -44,32 +44,33 @@ router.post('/add', upload.single('foodImage'), async (req, res) => {
     //     servings, cookTime, prepTime, category, create_date, modified_date,
     //     upvotes, comments } = req.body
     try {
-
-        let newPost = new Post(req.body)
-
+        console.log("req body", req.body)
+        
+        console.log("req file", req.file)
+        //console.log(req.body.foodImage)
+        // console.log("req body", req.body)
+        // console.log("req file", req)
+        let newPost
         if (req.file) {
-            newPost({ foodImage: req.file.location })
+           newPost = new Post({
+                title,
+                description,
+                ingredients,
+                method,
+                cookTime,
+                prepTime,
+                create_date,
+                modified_date,
+                upvotes,
+                comments,
+                foodImages: req.file.location
+            })
         }
 
-        //     title,
-        //     username,
-        //     description,
-        //     ingredients,
-        //     method,
-        //     servings,
-        //     cookTime,
-        //     prepTime,
-        //     category,
-        //     create_date,
-        //     modified_date,
-        //     upvotes,
-        //     comments,
-        //     blogImages: req.file.location,
-        // })
         const post = await newPost.save()
 
         res.json(post)
-        res.send("New post added")
+        // res.send("New post added")
     } catch (error) {
         console.log(error.message)
         res.status(500).send("Server Error")
@@ -157,7 +158,7 @@ router.put('/:id', upload.single('foodImage'), async (req, res) => {
 
         if (!post) return res.status(404).json({ msg: "No post found!" })
         res.json(post)
-        
+
     } catch (error) {
         console.log(error.message)
         res.status(500).send("Server Error")
