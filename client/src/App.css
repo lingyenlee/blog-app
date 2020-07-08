@@ -8,8 +8,37 @@
   background-repeat: no-repeat;
 }
 
+/* Add recipe form */
 
+input[type="text"]:not(.browser-default),
+input[type=number]:not(.browser-default) {
+  border: 1px black solid;
+  border-radius: 5px;
+}
 
+input[type="text"]:not(.browser-default):focus:not([readonly]),
+input[type="number"]:not(.browser-default):focus:not([readonly]) {
+  border: 1px blue solid;
+  box-shadow: 0 1px 0 0 blue;
+}
 
-/* recipe page */
+textarea {
+  border: 1px black solid;
+  border-radius: 5px;
+  height: 8rem;
+}
 
+textarea.focus:not([readonly]) {
+  border: 1px blue solid;
+  box-shadow: 0 1px 0 0 blue;
+}
+
+.input-box {
+  display: flex;
+}
+
+.btn-box {
+  display: flex;
+  align-items: center;
+  margin: 0 0 8px 0;
+}

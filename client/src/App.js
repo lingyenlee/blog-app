@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import M from "materialize-css";
 import "materialize-css/dist/css/materialize.min.css";
 import './App.css';
@@ -9,8 +9,13 @@ import RecipePage from "./pages/RecipePage";
 import AddRecipeForm from './components/AddRecipeForm';
 
 
-
 function App() {
+
+  useEffect(() => {
+    //initialize materialize JS
+    M.AutoInit()
+  })
+
   return (
     <>
       <Router>
