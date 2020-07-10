@@ -40,22 +40,21 @@ router.get('/:id', async (req, res) => {
 // @access Private
 router.post('/add', upload.single('foodImage'), async (req, res) => {
 
-    // const { title, username, description, ingredients, directions,
-    //     servings, cookTime, prepTime, category, create_date, modified_date,
-    //     upvotes, comments } = req.body
+    const { title, description, ingredients, method,
+        servingSize, cookTime, prepTime, create_date, modified_date,
+        upvotes, comments } = req.body
     try {
         console.log("req body", req.body)
-        
         console.log("req file", req.file)
-        //console.log(req.body.foodImage)
-        // console.log("req body", req.body)
-        // console.log("req file", req)
-        let newPost
-        if (req.file) {
-           newPost = new Post({
+        let newPost;
+        if (!req.file) {
+            console.log("Image file not found")
+        } else {
+            newPost = new Post({
                 title,
                 description,
                 ingredients,
+                servingSize,
                 method,
                 cookTime,
                 prepTime,
@@ -63,7 +62,7 @@ router.post('/add', upload.single('foodImage'), async (req, res) => {
                 modified_date,
                 upvotes,
                 comments,
-                foodImages: req.file.location
+                foodImage: req.file.location
             })
         }
 

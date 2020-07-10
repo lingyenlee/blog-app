@@ -1,9 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-const InputList = ({ onInputChange, name }) => {
+const InputList = ({ onInputChange, name, items }) => {
 
+    console.log(items)
     const [inputList, setInputList] = useState([{}]);
+    // const [currentList, setCurrentList] = useState([value])
 
+    useEffect(() => {
+        if (items) {
+            setInputList([items])
+        }
+    }, [items])
+    
     // handle click event of the Remove button
     const handleRemoveClick = index => {
         const list = [...inputList];
@@ -26,12 +34,13 @@ const InputList = ({ onInputChange, name }) => {
 
     }
 
+
     return (
         <div>
             {inputList.map((x, i) => {
                 return (
                     <div className="input-box" key={i}>
-                        <input
+                        <textarea
                             type="text"
                             name={name}
                             placeholder={`Enter ${name}`}

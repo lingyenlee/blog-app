@@ -35,9 +35,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 // app.use(express.static(__dirname + '/public'))
 
-app.get('/', (req, res) => {
-    res.send(`Our recipe app is running on PORT ${PORT}`)
-})
+// app.get('/', (req, res) => {
+//     res.send(`Our recipe app is running on PORT ${PORT}`)
+// })
 
 //use posts routes
 app.use('/posts', postRouter);

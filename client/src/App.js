@@ -1,15 +1,11 @@
 import React, { useEffect } from 'react';
-import M from "materialize-css";
-import "materialize-css/dist/css/materialize.min.css";
+import 'materialize-css/dist/css/materialize.min.css';
+import M from 'materialize-css/dist/js/materialize.min.js';
 import './App.css';
-import NavBar from './layout/NavBar'
-import HomePage from './pages/HomePage';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import RecipePage from "./pages/RecipePage";
-import AddRecipeForm from './components/AddRecipeForm';
+import SearchBar from './layout/SearchBar'
+import Recipes from './components/Recipes';
 
-
-function App() {
+const App = () => {
 
   useEffect(() => {
     //initialize materialize JS
@@ -18,14 +14,19 @@ function App() {
 
   return (
     <>
-      <Router>
-        <NavBar />
-        <Switch>
+      {/* <Router> */}
+      <SearchBar />
+      <div className="container">
+        <Recipes />
+      </div>
+
+      {/* <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/posts/:id" component={RecipePage} />
-          <Route exact path="/add-recipe" component={AddRecipeForm} />
+          <Route exact path="/recipe-form" component={RecipeForm} />
+          <Route exact path="/edit-recipe/:id" render={props => <RecipeForm recipeId={props.match.params.id} />} />
         </Switch>
-      </Router>
+      </Router> */}
     </>
   );
 }

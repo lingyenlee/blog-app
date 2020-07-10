@@ -1,14 +1,13 @@
-import React from 'react'
-import RecipesList from '../components/RecipesList'
-import LandingImage from '../components/LandingImage'
+// import React from 'react'
+// import RecipesList from '../components/Recipes'
+// import LandingImage from '../components/LandingImage'
 
-const HomePage = () => {
-    return (
-        <div>
-            <LandingImage />
-            <RecipesList />
-        </div>
-    )
-}
+// const HomePage = () => {
+//     return (
+//         <div>
+//             <RecipesList />
+//         </div>
+//     )
+// }
 
-export default HomePage
+// export default HomePage
