@@ -4,6 +4,9 @@ import M from 'materialize-css/dist/js/materialize.min.js';
 import './App.css';
 import SearchBar from './layout/SearchBar'
 import Recipes from './components/Recipes';
+import AddBtn from './layout/AddBtn'
+import AddRecipeForm from './components/AddRecipeForm'
+import EditRecipeForm from './components/EditRecipleForm'
 
 const App = () => {
 
@@ -16,7 +19,11 @@ const App = () => {
     <>
       {/* <Router> */}
       <SearchBar />
-      <div className="container">
+      <div className="container-fluid">
+        <AddBtn />
+
+        <AddRecipeForm />
+        <EditRecipeForm />
         <Recipes />
       </div>
 

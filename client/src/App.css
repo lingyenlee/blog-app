@@ -1,17 +1,17 @@
-/* Landing Image */
-
-#landing-img {
-  background-image: url("./images/landingImage.jpg");
-  height: 70vh;
-  width: 100%;
-  background-size: cover;
-  background-repeat: no-repeat;
+/* Add recipe form */
+#add-recipe-modal,
+#edit-recipe-modal {
+  width: 75%;
+  height: fit-content;
 }
 
-/* Add recipe form */
-
+#add-recipe-modal .row,
+#edit-recipe-modal .row {
+  margin-bottom: 0;
+}
+/* 
 input[type="text"]:not(.browser-default),
-input[type=number]:not(.browser-default) {
+input[type="number"]:not(.browser-default) {
   border: 1px black solid;
   border-radius: 5px;
 }
@@ -41,4 +41,4 @@ textarea.focus:not([readonly]) {
   display: flex;
   align-items: center;
   margin: 0 0 8px 0;
-}
+} */
