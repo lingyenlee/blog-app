@@ -25,9 +25,11 @@ router.get('/', async (req, res) => {
 // @access Public
 
 router.get('/:id', async (req, res) => {
+  
     try {
         let post = await Post.findById(req.params.id)
         if (!post) return res.status(404).json({ msg: "No post found!" })
+        console.log(post)
         res.json(post)
     } catch (error) {
         console.log(error.message)
@@ -41,34 +43,33 @@ router.get('/:id', async (req, res) => {
 router.post('/add', upload.single('foodImage'), async (req, res) => {
 
     const { title, description, ingredients, method,
-        servingSize, cookTime, prepTime, create_date, modified_date,
-        upvotes, comments } = req.body
+        servingSize, cookTime, prepTime, create_date, modified_date } = req.body
+
+    // const { foodImage } = req.file
     try {
         console.log("req body", req.body)
         console.log("req file", req.file)
-        let newPost;
+        // let newPost;
+
+
         if (!req.file) {
-            console.log("Image file not found")
+            // res.json(req.file)
+            const newPost = new Post()
+            console.log("no file")
+            await newPost.save(req.body)
+            res.json(newPost)
         } else {
-            newPost = new Post({
-                title,
-                description,
-                ingredients,
-                servingSize,
-                method,
-                cookTime,
-                prepTime,
-                create_date,
-                modified_date,
-                upvotes,
-                comments,
-                foodImage: req.file.location
+            const newPost = new Post({
+                title, description, ingredients, method,
+                servingSize, cookTime, prepTime, create_date, modified_date, foodImage: req.file.location
             })
+            await newPost.save()
+            res.json(newPost)
         }
 
-        const post = await newPost.save()
+        // const post = await newPost.save()
 
-        res.json(post)
+
         // res.send("New post added")
     } catch (error) {
         console.log(error.message)

@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
 import InputList from './InputList'
 import axios from 'axios'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+import { addRecipes } from '../actions/recipeActions'
+import M from 'materialize-css/dist/js/materialize.min.js';
 
 
-
-const AddRecipeForm = () => {
+const AddRecipeForm = ({ addRecipes }) => {
 
 
     const [file, setFile] = useState('')
@@ -44,14 +47,40 @@ const AddRecipeForm = () => {
         setFile(file)
     }
 
-    const handleSubmit = async e => {
+    const handleSubmit = e => {
         e.preventDefault()
 
         // if (inputData === {} || ingredients === '' || method === '') {
         //     M.toast({ html: 'Please complete your recipe!' })
+
         // } else {
-        //     console.log(inputData)
-        // }
+
+        const formData = new FormData()
+        
+        if (file) {
+            formData.append('foodImage', file) //appending file
+        }
+
+        for (let k in inputData) {
+            console.log(k, inputData[k])
+            formData.append(k, inputData[k])
+        }
+
+        for (let i = 0; i < ingredients.length; i++) {
+            // console.log(ingredient[i].ingredient)
+            formData.append('ingredients[]', ingredients[i].ingredients);
+        }
+
+        for (let i = 0; i < method.length; i++) {
+            // console.log(method[i].step)
+            formData.append('method[]', method[i].method);
+        }
+
+        // const { title, description, prepTime,cookTime,servingSize, foodImage} = inputData
+        // console.log(addRecipes)
+        addRecipes(formData)
+
+        M.toast({ html: `Recipe added` })
 
         //clear form
         setInputData({
@@ -65,36 +94,18 @@ const AddRecipeForm = () => {
         setFile('')
         setIngredients('')
         setMethod('')
+        // }
 
-        const formData = new FormData()
-        formData.append('foodImage', file) //appending file
+        // const res = await axios.post('http://localhost:5000/posts/add', formData,
+        //     {
+        //         headers: {
+        //             // 'Content-Type': 'application/json'
+        //             'Content-Type': 'multipart/form-data'
+        //         },
+        //     })
+        // console.log(res.data)
+        // }
 
-        for (let k in inputData) {
-            formData.append(k, inputData[k])
-        }
-
-        for (let i = 0; i < ingredients.length; i++) {
-            // console.log(ingredient[i].ingredient)
-            formData.append('ingredients[]', ingredients[i].ingredients);
-        }
-
-        for (let i = 0; i < method.length; i++) {
-            // console.log(method[i].step)
-            formData.append('method[]', method[i].method);
-        }
-        try {
-            const res = await axios.post('http://localhost:5000/posts/add', formData,
-                {
-                    headers: {
-                        // 'Content-Type': 'application/json'
-                        'Content-Type': 'multipart/form-data'
-                    },
-                })
-            console.log(res.data)
-
-        } catch (error) {
-            console.log(error)
-        }
     }
 
     return (
@@ -197,4 +208,8 @@ const AddRecipeForm = () => {
     )
 }
 
-export default AddRecipeForm
+AddRecipeForm.propTypes = {
+    addRecipes: PropTypes.func.isRequired,
+}
+
+export default connect(null, { addRecipes })(AddRecipeForm)

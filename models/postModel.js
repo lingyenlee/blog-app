@@ -2,22 +2,9 @@ import mongoose from 'mongoose'
 
 const Schema = mongoose.Schema
 
-const CommentSchema = new Schema({
-    username: {
-        type: String,
-    },
-    text: {
-        type: String,
-    }
-})
-
 const PostSchema = new Schema({
 
     title: {
-        type: String,
-
-    },
-    username: {
         type: String,
 
     },
@@ -47,13 +34,11 @@ const PostSchema = new Schema({
         type: Date,
         default: Date.now
     },
-    upvotes: {
-        type: Number
-    },
+
     foodImage: {
         type: String
-    },
-    comments: [CommentSchema]
+    }
+
 })
 
 module.exports = mongoose.model("Post", PostSchema)
